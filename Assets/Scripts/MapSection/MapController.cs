@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using Utils.GenericSingletons;
 using Utils.HelperClasses;
 
 public class MapController : MonoBehaviourSingleton<MapController>
 {
+    public event Action<Platform> onCreateNewPlatform;
+
     [SerializeField] private PrefabProps platformPrefab;
 
 
@@ -30,6 +33,8 @@ public class MapController : MonoBehaviourSingleton<MapController>
         Destroy(prevPlatform.gameObject, 2.0f);
 
         latestSpawnedPlatform = platform;
+
+        onCreateNewPlatform?.Invoke(latestSpawnedPlatform);
     }
 
     private Platform CreatePlatform()
