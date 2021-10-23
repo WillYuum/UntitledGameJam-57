@@ -1,9 +1,10 @@
+using DG.Tweening;
 using UnityEngine;
 using Utils.GenericSingletons;
 
 public class Player : MonoBehaviourSingleton<Player>
 {
-
+    private bool canMove = true;
     [SerializeField] private float moveSpeed = 3.0f;
     void Update()
     {
@@ -14,9 +15,34 @@ public class Player : MonoBehaviourSingleton<Player>
 
     private void HandlePlayerMovement()
     {
+        if (canMove == false) return;
+
         float horizontal = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
         float vertical = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
 
         transform.position += new Vector3(horizontal, vertical, 0);
+    }
+
+    public void MoveToNextPlatform()
+    {
+        DisableMovement();
+
+        float newXPos = MapController.instance.latestSpawnedPlatform.GetEnterPos().x;
+        float duration = Mathf.Abs(newXPos - transform.position.x) / moveSpeed;
+
+        transform
+        .DOMoveX(newXPos, duration)
+        .SetEase(Ease.InOutSine)
+        .OnComplete(EnableMovement);
+    }
+
+
+    private void EnableMovement()
+    {
+        canMove = true;
+    }
+    private void DisableMovement()
+    {
+        canMove = false;
     }
 }

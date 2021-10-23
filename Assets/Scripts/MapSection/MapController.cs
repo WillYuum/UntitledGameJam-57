@@ -9,18 +9,35 @@ public class MapController : MonoBehaviourSingleton<MapController>
     [SerializeField] private PrefabProps platformPrefab;
 
 
+    public Platform latestSpawnedPlatform { get; private set; }
 
-
-
-    private Platform latestSpawnedPlatform = null;
-    private void CreatePlatform()
+    void Awake()
     {
-        GameObject spawnedPlatform = Instantiate(platformPrefab.prefab, platformPrefab.nodeHolder);
-        Platform platform = spawnedPlatform.GetComponent<Platform>();
+        AssignFirstSpawnedRoad();
+    }
+
+    private void AssignFirstSpawnedRoad()
+    {
+        latestSpawnedPlatform = platformPrefab.nodeHolder.GetChild(0).GetComponent<Platform>();
+    }
+
+    public Vector2 GetLatestSpawnedPlatformPos() => latestSpawnedPlatform.transform.position;
+    public void SpawnAnotherPlatform()
+    {
+        Platform platform = CreatePlatform();
 
         PositionPlatform(platform);
 
+        var prevPlatform = latestSpawnedPlatform;
+        Destroy(prevPlatform.gameObject, 2.0f);
+
         latestSpawnedPlatform = platform;
+    }
+
+    private Platform CreatePlatform()
+    {
+        GameObject spawnedPlatform = Instantiate(platformPrefab.prefab, platformPrefab.nodeHolder);
+        return spawnedPlatform.GetComponent<Platform>();
     }
 
     private void PositionPlatform(Platform spawnedPlatform)
