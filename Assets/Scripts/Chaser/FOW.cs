@@ -39,20 +39,24 @@ namespace Chaser
         private void FindVisibleTargets()
         {
             visibleTargets.Clear();
-            Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+            Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, viewRadius, targetMask.value);
 
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
-                Vector3 dirToTarget = (target.position - transform.position).normalized;
-                if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+                Vector2 dirToTarget = (target.position - transform.position).normalized;
+                if (Vector2.Angle(transform.forward, dirToTarget) < viewAngle / 2)
                 {
+
+                    Debug.Log("PEW PEW");
                     float dstToTarget = Vector3.Distance(transform.position, target.position);
 
                     if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                     {
                         visibleTargets.Add(target);
                     }
+
+                    // Debug.Break();
                 }
             }
         }
