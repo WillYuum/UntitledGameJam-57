@@ -7,9 +7,6 @@ namespace Chaser
 {
     public class Chaser : MonoBehaviour
     {
-
-
-
         [SerializeField] private float moveSpeed = 7.5f;
 
         private FOW fow;
@@ -19,8 +16,5 @@ namespace Chaser
             fow = gameObject.GetComponent<FOW>();
             fow.EnableFOW();
         }
-
-
-
     }
 }

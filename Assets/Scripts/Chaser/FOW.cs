@@ -47,16 +47,13 @@ namespace Chaser
                 Vector2 dirToTarget = (target.position - transform.position).normalized;
                 if (Vector2.Angle(transform.forward, dirToTarget) < viewAngle / 2)
                 {
-
-                    Debug.Log("PEW PEW");
+                    Debug.Log(" TEST" + target.gameObject.name);
                     float dstToTarget = Vector3.Distance(transform.position, target.position);
 
-                    if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                    if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                     {
                         visibleTargets.Add(target);
                     }
-
-                    // Debug.Break();
                 }
             }
         }
