@@ -21,9 +21,10 @@ namespace Tutorial
         }
 
 
-        public void StartTutorial()
+        public void StartTutorial(Platform platform)
         {
             MapController.instance.onCreateNewPlatform += OnJumpToNewPlatform;
+            SetTutorialOnPlatform(platform);
             DisplayTutorialNode();
         }
 
@@ -43,8 +44,13 @@ namespace Tutorial
 
         private void OnJumpToNewPlatform(Platform platform)
         {
-            tutorialNodes[tutorialNodeIndex].transform.position = platform.transform.position;
+            SetTutorialOnPlatform(platform);
             DisplayTutorialNode();
+        }
+
+        private void SetTutorialOnPlatform(Platform platform)
+        {
+            tutorialNodes[tutorialNodeIndex].transform.position = platform.transform.position;
         }
 
         private void EndTutorialMode()

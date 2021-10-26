@@ -5,6 +5,8 @@ using Utils.GenericSingletons;
 public class Player : MonoBehaviourSingleton<Player>
 {
     private bool canMove = true;
+    private bool isHiding = false;
+
     [SerializeField] private float moveSpeed = 3.0f;
     void Update()
     {
@@ -44,5 +46,16 @@ public class Player : MonoBehaviourSingleton<Player>
     private void DisableMovement()
     {
         canMove = false;
+    }
+
+
+    public void EnterHideState()
+    {
+        isHiding = true;
+    }
+
+    public void ExitHideState()
+    {
+        isHiding = false;
     }
 }
