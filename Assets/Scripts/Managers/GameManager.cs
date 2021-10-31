@@ -13,13 +13,14 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     public bool hasPlayedTutorial = false;
 
+    [SerializeField] private GameObject YouWonGameText;
     public bool GameIsOn { get; private set; }
 
     void Awake()
     {
         hasPlayedTutorial = false;
         // Invoke(nameof(StartGame), 0.1f);
-
+        YouWonGameText.SetActive(false);
         MapController.instance.onCreateNewPlatform += OnStartGame;
     }
 
@@ -42,6 +43,18 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         }
 
         MapController.instance.onCreateNewPlatform -= OnStartGame;
+    }
+
+    public void WinGame()
+    {
+        print("Won game");
+        YouWonGameText.SetActive(true);
+        Invoke(nameof(Restart), 2.5f);
+    }
+
+    private void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void LoseGame()

@@ -29,7 +29,7 @@ public class Player : MonoBehaviourSingleton<Player>
 
         dashDelayer.IncrementTimer(out bool isFinishedDelay);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             bool isPressedMoveKey = Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0;
             if (isPressedMoveKey)
@@ -97,13 +97,6 @@ public class Player : MonoBehaviourSingleton<Player>
     {
         canMove = false;
     }
-
-
-    private void HandleDash()
-    {
-
-    }
-
 
     public void EnterHideState()
     {

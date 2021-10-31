@@ -32,7 +32,6 @@ public class RouteController : MonoBehaviour
     {
         if (isWaiting)
         {
-            print("IsWaitin");
             waitToMoveNextPoint.IncrementTimer(out bool isFinishedDelay);
             if (isFinishedDelay)
             {

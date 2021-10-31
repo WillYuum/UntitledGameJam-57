@@ -13,11 +13,17 @@ public class MapController : MonoBehaviourSingleton<MapController>
 
     public Level latestSpawnedPlatform { get; private set; }
 
+    private bool isLastLevel = false;
+
 
     [SerializeField] private Utils.PsuedoRandArray<Level> allLevels;
 
+
+    private CounterController levelCounter;
+
     void Start()
     {
+        levelCounter = new CounterController(allLevels.items.Length);
         AssignFirstSpawnedRoad();
     }
 
@@ -28,8 +34,24 @@ public class MapController : MonoBehaviourSingleton<MapController>
     }
 
     public Vector2 GetLatestSpawnedPlatformPos() => latestSpawnedPlatform.transform.position;
+
+    private int x = 0;
     public void SpawnAnotherLevel()
     {
+        //WARNING: Should put this in gameloop logic
+        x += 1;
+
+        if (x > 3)
+        {
+            GameManager.instance.WinGame();
+
+        }
+
+        // if (levelCounter.CheckIfReachLastNumber())
+        // {
+        //     GameManager.instance.WinGame();
+        // }
+
         Level level = SpawnNextLevel();
 
         PositionPlatform(level);
@@ -74,4 +96,33 @@ public class MapController : MonoBehaviourSingleton<MapController>
         return platformPrefab.prefab.GetComponent<Platform>().GetPlatformSize();
     }
 
+}
+
+public class CounterController
+{
+    private int currentCounter;
+    private int lastNumber;
+
+    public CounterController(int _lastNumber)
+    {
+        currentCounter = 0;
+        lastNumber = _lastNumber;
+    }
+
+
+    public void InvokeCountOnce()
+    {
+        if (CheckIfReachLastNumber()) return;
+        currentCounter += 1;
+    }
+
+    public bool CheckIfReachLastNumber(bool invokeCountOnce = false)
+    {
+        if (invokeCountOnce)
+        {
+            InvokeCountOnce();
+        }
+
+        return currentCounter >= lastNumber;
+    }
 }
