@@ -14,6 +14,7 @@ namespace Tutorial
 
         [HideInInspector] public bool tutorialIsActive { get; private set; }
 
+
         private int tutorialNodeIndex = 0;
 
         void Awake()

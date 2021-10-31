@@ -13,11 +13,18 @@ namespace Utils
             {
                 items = _items;
             }
-
         }
+
         public T[] items;
         private int currentIndex = 0;
 
+        private bool canShuffle = true;
+
+
+        public void ToggleShuffle(bool _canShuffle)
+        {
+            canShuffle = _canShuffle;
+        }
 
         public T PickNext()
         {
@@ -26,16 +33,16 @@ namespace Utils
             currentIndex += 1;
             if (currentIndex >= items.Length)
             {
-                UtilityHelper.ShuffleArray(items);
+                ShuffleArray();
                 currentIndex = 0;
             }
-
 
             return selectedItem;
         }
 
         public void ShuffleArray()
         {
+            if (canShuffle == false) return;
             UtilityHelper.ShuffleArray(items);
         }
     }

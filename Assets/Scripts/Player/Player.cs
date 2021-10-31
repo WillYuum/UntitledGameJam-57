@@ -138,8 +138,6 @@ public class DelayController
                 isFinishedDelay = true;
             }
         }
-
-        Debug.Log("Timer " + currentTimer);
     }
 
     public void ResetTimer()
