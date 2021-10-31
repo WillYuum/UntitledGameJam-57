@@ -1,6 +1,7 @@
 using UnityEngine;
 using Utils.GenericSingletons;
 using Tutorial;
+using UnityEngine.SceneManagement;
 
 
 public enum GameState { Paused, Playing, Tutorial };
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     public bool hasPlayedTutorial = false;
 
+    public bool GameIsOn { get; private set; }
 
     void Awake()
     {
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     private void OnStartGame(Level level)
     {
+        GameIsOn = true;
         if (hasPlayedTutorial)
         {
             //Start a level
@@ -39,6 +42,12 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         }
 
         MapController.instance.onCreateNewPlatform -= OnStartGame;
+    }
+
+    public void LoseGame()
+    {
+        GameIsOn = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void Update()

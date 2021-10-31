@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace Chaser
 
         [SerializeField] private FowVision fowVision;
 
+        public event Action onCaughtTarget;
+
 
         [Header("Filters")]
         public LayerMask targetMask;
@@ -24,12 +27,14 @@ namespace Chaser
 
         public void EnableFOW()
         {
-            // StartCoroutine(nameof(FindTargetsWithDelay), .2f);
+            gameObject.SetActive(true);
+            StartCoroutine(nameof(FindTargetsWithDelay), .2f);
         }
 
         public void DisableFOW()
         {
-            // StopCoroutine(nameof(FindTargetsWithDelay));
+            gameObject.SetActive(false);
+            StopCoroutine(nameof(FindTargetsWithDelay));
         }
 
         void Update()
@@ -53,6 +58,8 @@ namespace Chaser
             visibleTargets.Clear();
             Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, viewRadius, targetMask.value);
 
+            bool caughtTarget = false;
+
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
@@ -64,8 +71,15 @@ namespace Chaser
                     if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                     {
                         visibleTargets.Add(target);
+                        caughtTarget = true;
+                        break;
                     }
                 }
+            }
+
+            if (caughtTarget)
+            {
+                onCaughtTarget?.Invoke();
             }
         }
     }
