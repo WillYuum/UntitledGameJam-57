@@ -35,7 +35,7 @@ namespace Chaser
         void Update()
         {
             fowVision.SetOrigin(transform.position);
-            fowVision.SetAimDirection(Vector3.up);
+            fowVision.SetAimDirection(transform.parent.up);
         }
 
 
@@ -67,16 +67,6 @@ namespace Chaser
                     }
                 }
             }
-        }
-
-
-        public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal = false)
-        {
-            // if (!angleIsGlobal)
-            // {
-            angleInDegrees += transform.eulerAngles.y;
-            // }
-            return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
         }
     }
 }

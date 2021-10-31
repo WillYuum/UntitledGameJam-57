@@ -119,6 +119,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   visibleTargets: []
+  forwardTransform: {fileID: 0}
 --- !u!1 &7648143308430938910
 GameObject:
   m_ObjectHideFlags: 0

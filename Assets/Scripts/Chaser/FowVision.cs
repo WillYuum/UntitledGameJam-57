@@ -53,7 +53,6 @@ namespace Chaser
             Vector2[] uv = new Vector2[vertices.Length];
             int[] triangles = new int[rayCount * 3];
 
-            // origin -= transform.parent.localPosition;
             vertices[0] = origin - transform.parent.position;
 
             int vertexIndex = 1;
@@ -64,7 +63,6 @@ namespace Chaser
                 Vector3 dirFromAngle = GetVectorFromAngle(angle);
 
                 RaycastHit2D hitInfo = Physics2D.Raycast(origin, dirFromAngle, fow.viewRadius);
-                // Debug.DrawRay(transform.position, dirFromAngle, Color.black);
                 if (hitInfo.collider == null)
                 {
                     vertex = (origin - transform.parent.position) + dirFromAngle * fow.viewRadius;
@@ -102,6 +100,7 @@ namespace Chaser
         private Vector3 GetVectorFromAngle(float angle)
         {
             float angleRad = angle * (Mathf.PI / 180f);
+            angleRad += transform.parent.eulerAngles.z;
             return new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
         }
 
