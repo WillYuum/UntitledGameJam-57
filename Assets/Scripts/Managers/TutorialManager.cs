@@ -12,6 +12,8 @@ namespace Tutorial
 
         [SerializeField] private GameObject[] tutorialNodes;
 
+        [HideInInspector] public bool tutorialIsActive { get; private set; }
+
         private int tutorialNodeIndex = 0;
 
         void Awake()
@@ -23,6 +25,8 @@ namespace Tutorial
 
         public void StartTutorial(Level level)
         {
+            tutorialIsActive = true;
+
             MapController.instance.onCreateNewPlatform += OnJumpToNewLevel;
             SetTutorialOnLevel(level);
             DisplayTutorialNode();
@@ -56,6 +60,7 @@ namespace Tutorial
         private void EndTutorialMode()
         {
             Debug.Log("Ended Tutorial");
+            tutorialIsActive = false;
             MapController.instance.onCreateNewPlatform -= OnJumpToNewLevel;
         }
 

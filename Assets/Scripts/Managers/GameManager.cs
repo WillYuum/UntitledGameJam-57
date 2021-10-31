@@ -8,7 +8,6 @@ public enum GameState { Paused, Playing, Tutorial };
 public class GameManager : MonoBehaviourSingleton<GameManager>
 {
 
-    [SerializeField] private GameObject startGameNode;
     public GameState currentGameState { get; private set; }
 
     public bool hasPlayedTutorial = false;
@@ -16,17 +15,16 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     void Awake()
     {
-        hasPlayedTutorial = true;
-        Invoke(nameof(StartGame), 0.1f);
+        hasPlayedTutorial = false;
+        // Invoke(nameof(StartGame), 0.1f);
 
         MapController.instance.onCreateNewPlatform += OnStartGame;
     }
 
-    public void StartGame()
-    {
-        Debug.Log("Started Game");
-        startGameNode.SetActive(true);
-    }
+    // public void StartGame()
+    // {
+    //     Debug.Log("Started Game");
+    // }
 
 
     private void OnStartGame(Level level)

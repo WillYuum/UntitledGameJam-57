@@ -9,13 +9,14 @@ public class MapController : MonoBehaviourSingleton<MapController>
 
     [SerializeField] private PrefabProps platformPrefab;
 
+    [SerializeField] private PrefabProps defaultLevelPrefab;
 
     public Level latestSpawnedPlatform { get; private set; }
 
 
     [SerializeField] private Utils.PsuedoRandArray<Level> allLevels;
 
-    void Awake()
+    void Start()
     {
         AssignFirstSpawnedRoad();
     }
@@ -23,6 +24,7 @@ public class MapController : MonoBehaviourSingleton<MapController>
     private void AssignFirstSpawnedRoad()
     {
         latestSpawnedPlatform = platformPrefab.nodeHolder.GetChild(0).GetComponent<Level>();
+        onCreateNewPlatform?.Invoke(latestSpawnedPlatform);
     }
 
     public Vector2 GetLatestSpawnedPlatformPos() => latestSpawnedPlatform.transform.position;
@@ -40,12 +42,25 @@ public class MapController : MonoBehaviourSingleton<MapController>
         onCreateNewPlatform?.Invoke(latestSpawnedPlatform);
     }
 
-    private Level SpawnNextLevel() => Instantiate(allLevels.PickNext());
-
-    private Platform CreatePlatform()
+    public void SpawnDefaultLevel()
     {
-        GameObject spawnedPlatform = Instantiate(platformPrefab.prefab, platformPrefab.nodeHolder);
-        return spawnedPlatform.GetComponent<Platform>();
+        Level defaultLevel = CreateDefaultLevel();
+        PositionPlatform(defaultLevel);
+
+        var lastLevel = latestSpawnedPlatform;
+        Destroy(lastLevel.gameObject, 2.0f);
+
+        latestSpawnedPlatform = defaultLevel;
+
+        onCreateNewPlatform?.Invoke(latestSpawnedPlatform);
+    }
+
+    private Level SpawnNextLevel() => Instantiate(allLevels.PickNext(), defaultLevelPrefab.nodeHolder);
+
+    private Level CreateDefaultLevel()
+    {
+        GameObject spawnedPlatform = Instantiate(defaultLevelPrefab.prefab, defaultLevelPrefab.nodeHolder);
+        return spawnedPlatform.GetComponent<Level>();
     }
 
     private void PositionPlatform(Level level)

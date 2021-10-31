@@ -1,6 +1,6 @@
-using System;
 using UnityEngine;
 using Utils.GenericSingletons;
+using Tutorial;
 
 public class GameLoopManager : MonoBehaviourSingleton<GameLoopManager>
 {
@@ -9,7 +9,15 @@ public class GameLoopManager : MonoBehaviourSingleton<GameLoopManager>
     {
         Debug.Log("Switching to new platform");
 
-        MapController.instance.SpawnAnotherLevel();
+        if (TutorialManager.instance.tutorialIsActive)
+        {
+            MapController.instance.SpawnDefaultLevel();
+        }
+        else
+        {
+            MapController.instance.SpawnAnotherLevel();
+        }
+
 
         Vector2 nextCameraPos = MapController.instance.GetLatestSpawnedPlatformPos();
         CameraController.instance.MoveCameraToNextPlatform(nextCameraPos);
