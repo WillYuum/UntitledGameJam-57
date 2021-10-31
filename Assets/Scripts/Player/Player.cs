@@ -29,7 +29,7 @@ public class Player : MonoBehaviourSingleton<Player>
     {
         DisableMovement();
 
-        float newXPos = MapController.instance.latestSpawnedPlatform.GetEnterPos().x;
+        float newXPos = MapController.instance.latestSpawnedPlatform.GetPlatform().GetEnterPos().x;
         float duration = Mathf.Abs(newXPos - transform.position.x) / moveSpeed;
 
         transform

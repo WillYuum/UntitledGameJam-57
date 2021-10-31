@@ -21,10 +21,10 @@ namespace Tutorial
         }
 
 
-        public void StartTutorial(Platform platform)
+        public void StartTutorial(Level level)
         {
-            MapController.instance.onCreateNewPlatform += OnJumpToNewPlatform;
-            SetTutorialOnPlatform(platform);
+            MapController.instance.onCreateNewPlatform += OnJumpToNewLevel;
+            SetTutorialOnLevel(level);
             DisplayTutorialNode();
         }
 
@@ -42,21 +42,21 @@ namespace Tutorial
             }
         }
 
-        private void OnJumpToNewPlatform(Platform platform)
+        private void OnJumpToNewLevel(Level level)
         {
-            SetTutorialOnPlatform(platform);
+            SetTutorialOnLevel(level);
             DisplayTutorialNode();
         }
 
-        private void SetTutorialOnPlatform(Platform platform)
+        private void SetTutorialOnLevel(Level level)
         {
-            tutorialNodes[tutorialNodeIndex].transform.position = platform.transform.position;
+            tutorialNodes[tutorialNodeIndex].transform.position = level.transform.position;
         }
 
         private void EndTutorialMode()
         {
             Debug.Log("Ended Tutorial");
-            MapController.instance.onCreateNewPlatform -= OnJumpToNewPlatform;
+            MapController.instance.onCreateNewPlatform -= OnJumpToNewLevel;
         }
 
 

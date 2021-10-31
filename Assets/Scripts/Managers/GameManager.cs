@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     void Awake()
     {
-        hasPlayedTutorial = false;
+        hasPlayedTutorial = true;
         Invoke(nameof(StartGame), 0.1f);
 
         MapController.instance.onCreateNewPlatform += OnStartGame;
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     }
 
 
-    private void OnStartGame(Platform platform)
+    private void OnStartGame(Level level)
     {
         if (hasPlayedTutorial)
         {
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         }
         else
         {
-            TutorialManager.instance.StartTutorial(platform);
+            TutorialManager.instance.StartTutorial(level);
         }
 
         MapController.instance.onCreateNewPlatform -= OnStartGame;

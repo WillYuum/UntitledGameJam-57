@@ -6,24 +6,36 @@ namespace Chaser
 {
     public class FOW : MonoBehaviour
     {
-        public float viewRadius;
+        [SerializeField] public float viewRadius;
         [Range(0, 360)]
-        public float viewAngle;
+        [SerializeField] public float viewAngle;
 
+        [SerializeField] private FowVision fowVision;
+
+
+        [Header("Filters")]
         public LayerMask targetMask;
         public LayerMask obstacleMask;
+
+
 
         [HideInInspector]
         public List<Transform> visibleTargets = new List<Transform>();
 
         public void EnableFOW()
         {
-            StartCoroutine(nameof(FindTargetsWithDelay), .2f);
+            // StartCoroutine(nameof(FindTargetsWithDelay), .2f);
         }
 
         public void DisableFOW()
         {
-            StopCoroutine(nameof(FindTargetsWithDelay));
+            // StopCoroutine(nameof(FindTargetsWithDelay));
+        }
+
+        void Update()
+        {
+            fowVision.SetOrigin(transform.position);
+            fowVision.SetAimDirection(Vector3.up);
         }
 
 
@@ -45,10 +57,9 @@ namespace Chaser
             {
                 Transform target = targetsInViewRadius[i].transform;
                 Vector2 dirToTarget = (target.position - transform.position).normalized;
-                if (Vector2.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+                if (Vector2.Angle(transform.up, dirToTarget) < viewAngle / 2)
                 {
-                    Debug.Log(" TEST" + target.gameObject.name);
-                    float dstToTarget = Vector3.Distance(transform.position, target.position);
+                    float dstToTarget = Vector2.Distance(transform.position, target.position);
 
                     if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                     {
@@ -59,12 +70,12 @@ namespace Chaser
         }
 
 
-        public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
+        public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal = false)
         {
-            if (!angleIsGlobal)
-            {
-                angleInDegrees += transform.eulerAngles.y;
-            }
+            // if (!angleIsGlobal)
+            // {
+            angleInDegrees += transform.eulerAngles.y;
+            // }
             return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
         }
     }

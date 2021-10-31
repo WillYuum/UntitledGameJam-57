@@ -9,7 +9,7 @@ public class GameLoopManager : MonoBehaviourSingleton<GameLoopManager>
     {
         Debug.Log("Switching to new platform");
 
-        MapController.instance.SpawnAnotherPlatform();
+        MapController.instance.SpawnAnotherLevel();
 
         Vector2 nextCameraPos = MapController.instance.GetLatestSpawnedPlatformPos();
         CameraController.instance.MoveCameraToNextPlatform(nextCameraPos);

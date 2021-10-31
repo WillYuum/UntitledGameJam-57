@@ -5,12 +5,15 @@ using Utils.HelperClasses;
 
 public class MapController : MonoBehaviourSingleton<MapController>
 {
-    public event Action<Platform> onCreateNewPlatform;
+    public event Action<Level> onCreateNewPlatform;
 
     [SerializeField] private PrefabProps platformPrefab;
 
 
-    public Platform latestSpawnedPlatform { get; private set; }
+    public Level latestSpawnedPlatform { get; private set; }
+
+
+    [SerializeField] private Utils.PsuedoRandArray<Level> allLevels;
 
     void Awake()
     {
@@ -19,23 +22,25 @@ public class MapController : MonoBehaviourSingleton<MapController>
 
     private void AssignFirstSpawnedRoad()
     {
-        latestSpawnedPlatform = platformPrefab.nodeHolder.GetChild(0).GetComponent<Platform>();
+        latestSpawnedPlatform = platformPrefab.nodeHolder.GetChild(0).GetComponent<Level>();
     }
 
     public Vector2 GetLatestSpawnedPlatformPos() => latestSpawnedPlatform.transform.position;
-    public void SpawnAnotherPlatform()
+    public void SpawnAnotherLevel()
     {
-        Platform platform = CreatePlatform();
+        Level level = SpawnNextLevel();
 
-        PositionPlatform(platform);
+        PositionPlatform(level);
 
-        var prevPlatform = latestSpawnedPlatform;
-        Destroy(prevPlatform.gameObject, 2.0f);
+        var lastLevel = latestSpawnedPlatform;
+        Destroy(lastLevel.gameObject, 2.0f);
 
-        latestSpawnedPlatform = platform;
+        latestSpawnedPlatform = level;
 
         onCreateNewPlatform?.Invoke(latestSpawnedPlatform);
     }
+
+    private Level SpawnNextLevel() => Instantiate(allLevels.PickNext());
 
     private Platform CreatePlatform()
     {
@@ -43,10 +48,10 @@ public class MapController : MonoBehaviourSingleton<MapController>
         return spawnedPlatform.GetComponent<Platform>();
     }
 
-    private void PositionPlatform(Platform spawnedPlatform)
+    private void PositionPlatform(Level level)
     {
-        Vector2 lastPlatformPos = latestSpawnedPlatform.transform.position;
-        spawnedPlatform.SetPosAfterPrevPlatform(lastPlatformPos);
+        Vector2 lastLevelPos = latestSpawnedPlatform.transform.position;
+        level.SetPosAfterPrevLevel(lastLevelPos);
     }
 
     public Vector2 GetGeneralPlatformSize()

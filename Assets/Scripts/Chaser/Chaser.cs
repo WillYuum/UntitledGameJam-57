@@ -9,12 +9,11 @@ namespace Chaser
     {
         [SerializeField] private float moveSpeed = 7.5f;
 
-        private FOW fow;
+        [SerializeField] private FOW fow;
 
         void Awake()
         {
-            fow = gameObject.GetComponent<FOW>();
-            fow.EnableFOW();
+            // fow.EnableFOW();
         }
     }
 }
