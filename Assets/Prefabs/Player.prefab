@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad807cafc286434a977e74a85675dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashForce: 50
+  dashDelayer:
+    delay: 2
   moveSpeed: 8
 --- !u!61 &1043652228028195359
 BoxCollider2D:
@@ -94,7 +97,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1669155455
 BoxCollider2D:
   m_ObjectHideFlags: 0

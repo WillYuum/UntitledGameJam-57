@@ -1487,9 +1487,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1831261595, guid: f8d8f656683aae4459c57617d8f3f087, type: 3}
-      propertyPath: m_Constraints
-      value: 4
+    - target: {fileID: 6989263086285715409, guid: f8d8f656683aae4459c57617d8f3f087, type: 3}
+      propertyPath: dashForce
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6989263086285715414, guid: f8d8f656683aae4459c57617d8f3f087, type: 3}
       propertyPath: m_RootOrder
