@@ -5,7 +5,6 @@ using Chaser;
 [CustomEditor(typeof(FOW))]
 public class FieldOfViewEditor : Editor
 {
-
     void OnSceneGUI()
     {
         FOW fow = (FOW)target;

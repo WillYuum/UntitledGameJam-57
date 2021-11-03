@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Chaser
 {
-    public class FowVision : MonoBehaviour
+    public class FowVisual : MonoBehaviour
     {
 
         private FOW fow;
@@ -11,7 +11,6 @@ namespace Chaser
 
 
         private Vector3 origin;
-
         private Mesh mesh;
         [SerializeField] private Material lightMaterial;
 
@@ -55,7 +54,6 @@ namespace Chaser
 
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, -transform.parent.rotation.z));
 
-            // origin -= transform.parent.localPosition;
             vertices[0] = origin - transform.parent.position;
 
             int vertexIndex = 1;
@@ -103,9 +101,7 @@ namespace Chaser
 
         private Vector3 GetVectorFromAngle(float angle)
         {
-            // return fow.DirFromAngle(angle);
             float angleRad = angle * (Mathf.PI / 180f);
-            // angleRad += transform.parent.eulerAngles.y;
             return new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
         }
 

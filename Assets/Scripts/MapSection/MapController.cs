@@ -8,12 +8,12 @@ public class MapController : MonoBehaviourSingleton<MapController>
     public event Action<Level> onCreateNewPlatform;
 
     [SerializeField] private PrefabProps platformPrefab;
-
     [SerializeField] private PrefabProps defaultLevelPrefab;
+
+
 
     public Level latestSpawnedPlatform { get; private set; }
 
-    private bool isLastLevel = false;
 
 
     [SerializeField] private Utils.PsuedoRandArray<Level> allLevels;
@@ -38,20 +38,6 @@ public class MapController : MonoBehaviourSingleton<MapController>
     private int x = 0;
     public void SpawnAnotherLevel()
     {
-        //WARNING: Should put this in gameloop logic
-        x += 1;
-
-        if (x > 3)
-        {
-            GameManager.instance.WinGame();
-
-        }
-
-        // if (levelCounter.CheckIfReachLastNumber())
-        // {
-        //     GameManager.instance.WinGame();
-        // }
-
         Level level = SpawnNextLevel();
 
         PositionPlatform(level);

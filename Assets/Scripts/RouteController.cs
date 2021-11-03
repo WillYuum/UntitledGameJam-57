@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using DG.Tweening;
@@ -58,7 +56,4 @@ public class RouteController : MonoBehaviour
     {
         isWaiting = true;
     }
-
-
-
 }

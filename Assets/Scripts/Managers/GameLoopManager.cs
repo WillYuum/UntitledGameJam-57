@@ -18,7 +18,6 @@ public class GameLoopManager : MonoBehaviourSingleton<GameLoopManager>
             MapController.instance.SpawnAnotherLevel();
         }
 
-
         Vector2 nextCameraPos = MapController.instance.GetLatestSpawnedPlatformPos();
         CameraController.instance.MoveCameraToNextPlatform(nextCameraPos);
 

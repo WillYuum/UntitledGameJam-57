@@ -11,8 +11,7 @@ namespace Chaser
         [Range(0, 360)]
         [SerializeField] public float viewAngle;
 
-        [SerializeField] private FowVision fowVision;
-
+        [SerializeField] private FowVisual fowVision;
         public event Action onCaughtTarget;
 
 
@@ -46,7 +45,7 @@ namespace Chaser
 
         IEnumerator FindTargetsWithDelay(float delay)
         {
-            while (true)
+            while (GameManager.instance.GameIsOn)
             {
                 yield return new WaitForSeconds(delay);
                 FindVisibleTargets();
@@ -86,10 +85,6 @@ namespace Chaser
 
         public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal = false)
         {
-            // if (!angleIsGlobal)
-            // {
-            // angleInDegrees += transform.eulerAngles.y;
-            // }
             return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
         }
     }

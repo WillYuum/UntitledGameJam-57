@@ -8,14 +8,25 @@ public class Player : MonoBehaviourSingleton<Player>
     private bool canMove = true;
     private bool isHiding = false;
 
+
+
+    [Header("Control props")]
     [SerializeField] private float dashForce = 2.0f;
     [SerializeField] private DelayController dashDelayer;
-
     [SerializeField] private float moveSpeed = 3.0f;
+
+    private Rigidbody2D rb;
+
+
+    void Awake()
+    {
+        rb = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+
     void Update()
     {
         HandlePlayerMovement();
-
     }
 
     private void HandlePlayerMovement()
@@ -34,12 +45,8 @@ public class Player : MonoBehaviourSingleton<Player>
             bool isPressedMoveKey = Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0;
             if (isPressedMoveKey)
             {
-                print("Clicked dashed");
-                // bool isFinishedDelay = false;
                 if (isFinishedDelay)
                 {
-                    print("Dashed!!");
-
                     if (vertical < 0)
                     {
                         vertical = -1;
@@ -58,7 +65,7 @@ public class Player : MonoBehaviourSingleton<Player>
                         horizontal = 1;
                     }
 
-                    gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(horizontal, vertical) * dashForce;
+                    rb.velocity = new Vector2(horizontal, vertical) * dashForce;
                     dashDelayer.ResetTimer();
                     StartCoroutine(StopDashEffect(.3f));
                 }
@@ -71,7 +78,7 @@ public class Player : MonoBehaviourSingleton<Player>
         while (GameManager.instance.GameIsOn)
         {
             yield return new WaitForSeconds(delay);
-            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
         }
     }
 
