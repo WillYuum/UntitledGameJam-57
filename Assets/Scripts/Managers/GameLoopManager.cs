@@ -1,9 +1,20 @@
 using UnityEngine;
 using Utils.GenericSingletons;
 using Tutorial;
+using UnityEngine.SceneManagement;
 
 public class GameLoopManager : MonoBehaviourSingleton<GameLoopManager>
 {
+
+    public bool GameIsOn { get; private set; }
+
+
+    public void StartGameLoop()
+    {
+        print("Game loop started");
+        
+        GameIsOn = true;
+    }
 
     public void HandlePlayerOnReachEndOfPlatform()
     {
@@ -25,5 +36,23 @@ public class GameLoopManager : MonoBehaviourSingleton<GameLoopManager>
     }
 
 
+    public void WinGame()
+    {
+        print("Won game");
+
+        HUD.instance.ToggleWinScreen(true);
+        Invoke(nameof(Restart), 2.5f);
+    }
+
+    private void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoseGame()
+    {
+        GameIsOn = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
 }

@@ -35,7 +35,6 @@ public class MapController : MonoBehaviourSingleton<MapController>
 
     public Vector2 GetLatestSpawnedPlatformPos() => latestSpawnedPlatform.transform.position;
 
-    private int x = 0;
     public void SpawnAnotherLevel()
     {
         Level level = SpawnNextLevel();
@@ -81,7 +80,6 @@ public class MapController : MonoBehaviourSingleton<MapController>
     {
         return platformPrefab.prefab.GetComponent<Platform>().GetPlatformSize();
     }
-
 }
 
 public class CounterController

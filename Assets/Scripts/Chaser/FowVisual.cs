@@ -4,7 +4,6 @@ namespace Chaser
 {
     public class FowVisual : MonoBehaviour
     {
-
         private FOW fow;
         float angleIncrements;
         [SerializeField] private int rayCount = 200;
@@ -54,7 +53,10 @@ namespace Chaser
 
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, -transform.parent.rotation.z));
 
-            vertices[0] = origin - transform.parent.position;
+
+            // print("Check here" + (origin - transform.parent.position));
+            // vertices[0] = origin - transform.parent.position;
+            vertices[0] = Vector2.zero;
 
             int vertexIndex = 1;
             int triangleIndex = 0;
@@ -64,7 +66,7 @@ namespace Chaser
                 Vector3 dirFromAngle = GetVectorFromAngle(angle);
 
                 RaycastHit2D hitInfo = Physics2D.Raycast(origin, dirFromAngle, fow.viewRadius);
-                Debug.DrawRay(transform.position, dirFromAngle, Color.black);
+                // Debug.DrawRay(transform.position, dirFromAngle, Color.black);
                 if (hitInfo.collider == null)
                 {
                     vertex = (origin - transform.parent.position) + dirFromAngle * fow.viewRadius;

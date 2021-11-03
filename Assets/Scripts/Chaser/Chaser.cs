@@ -17,7 +17,7 @@ namespace Chaser
 
         void Update()
         {
-            if (GameManager.instance.GameIsOn == false) return;
+            if (GameLoopManager.instance.GameIsOn == false) return;
 
             if (isTryingToCatchPlayer)
             {
@@ -39,7 +39,7 @@ namespace Chaser
 
             if (Vector2.Distance(transform.position, playerTransform.position) < 1f)
             {
-                GameManager.instance.LoseGame();
+                GameLoopManager.instance.LoseGame();
             }
             else
             {

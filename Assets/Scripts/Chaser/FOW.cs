@@ -16,24 +16,18 @@ namespace Chaser
 
 
         [Header("Filters")]
-        public LayerMask targetMask;
-        public LayerMask obstacleMask;
+        [SerializeField] private LayerMask targetMask;
+        [SerializeField] private LayerMask obstacleMask;
+        [SerializeField] private float delayToFindTarget = .2f;
 
 
 
         [HideInInspector]
-        public List<Transform> visibleTargets = new List<Transform>();
+        public List<Transform> visibleTargets;
 
-        public void EnableFOW()
+        void Awake()
         {
-            gameObject.SetActive(true);
-            StartCoroutine(nameof(FindTargetsWithDelay), .2f);
-        }
-
-        public void DisableFOW()
-        {
-            gameObject.SetActive(false);
-            StopCoroutine(nameof(FindTargetsWithDelay));
+            visibleTargets = new List<Transform>();
         }
 
         void Update()
@@ -43,9 +37,23 @@ namespace Chaser
         }
 
 
+        public void EnableFOW()
+        {
+            gameObject.SetActive(true);
+            StartCoroutine(nameof(FindTargetsWithDelay), delayToFindTarget);
+        }
+
+        public void DisableFOW()
+        {
+            gameObject.SetActive(false);
+            StopCoroutine(nameof(FindTargetsWithDelay));
+        }
+
+
+
         IEnumerator FindTargetsWithDelay(float delay)
         {
-            while (GameManager.instance.GameIsOn)
+            while (GameLoopManager.instance.GameIsOn)
             {
                 yield return new WaitForSeconds(delay);
                 FindVisibleTargets();

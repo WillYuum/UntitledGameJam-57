@@ -75,7 +75,7 @@ public class Player : MonoBehaviourSingleton<Player>
 
     private IEnumerator StopDashEffect(float delay)
     {
-        while (GameManager.instance.GameIsOn)
+        while (GameLoopManager.instance.GameIsOn)
         {
             yield return new WaitForSeconds(delay);
             rb.velocity = Vector2.zero;
